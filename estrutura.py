@@ -1,8 +1,24 @@
+from tkinter import *
+import tkinter as tk
+
+root = tk.Tk()
+canvas = tk.Canvas(root, width=200, height=200, borderwidth=0, highlightthickness=0, bg="black")
+canvas.grid()
 class No :
-    def __init__(self,nome,peso):
+    def __init__(self,nome,peso,canva):
+        self.canva = canva
         self.nome = nome
         self.peso = peso
         self.arestas = []
+    def desenharNo(self, x , y):
+        self.x = x
+        self.y = y
+        self.canvaNoId = canvas.create_oval(self.x, self.y,self.x +20, self.y +20,fill="#BBB",outline="") 
+        self._desenharPeso()
+    def _desenharPeso(self):
+         
+        self.pesoId = canvas.create_text(self.x + 10,self.y + 10,text=self.peso,fill="yellow")
+       
     def addAresta(self,aresta):
         self.arestas.append(aresta)
 ##  remove apenas uma das aresta do no 
@@ -22,7 +38,8 @@ class No :
             self.removeAresta(self.arestas[0].no1.nome,self.arestas[0].no2.nome)
 
 class Aresta:
-    def __init__(self,no1,no2):
+    def __init__(self,no1,no2,canva):
+        self.canva = canva
         self.nome=no1.nome + no2.nome
         self.no1=no1
         self.no2=no2
@@ -72,17 +89,13 @@ class especeGrafo:
             Aresta(self.espece.get(id1),self.espece.get(id2))
             return
         return
+c = No("leo",1, canvas)
+c.desenharNo(0,0)
+b= No("leo",2, canvas)
+b.desenharNo(50,0)
+a = No("leo",3, canvas)
+a.desenharNo(100,0)
+e = No("leo",4, canvas)
+e.desenharNo(100,40)
 
-
-
-espace = especeGrafo()
-c=No("leo", 1)
-b=No("le", 1)
-espace.addNo(c)
-espace.addNo(b)
-espace.addAresta("leo","le")
-print(espace.procurarNo("leo").arestas)
-espace.removerAresta("leo","le")
-print(espace.procurarNo("leo").arestas)
-
-
+root.mainloop()
